@@ -44,7 +44,7 @@ void uiImageAppend(uiImage *i, void *pixels, int pixelWidth, int pixelHeight, in
 	bp = (uint8_t *) pixels;
 	sp = swizzled;
 	for (y = 0; y < pixelHeight * pixelStride; y += pixelStride)
-		for (x = 0; x < pixelStride; x++) {
+		for (x = 0; x < pixelWidth; x++) {
 			sp[0] = bp[2];
 			sp[1] = bp[1];
 			sp[2] = bp[0];
@@ -69,7 +69,7 @@ void uiImageAppend(uiImage *i, void *pixels, int pixelWidth, int pixelHeight, in
 	[repCalibrated release];
 
 	[i->i addRepresentation:repsRGB];
-//	[repsRGB setSize:i->size];
+	[repsRGB setSize:i->size];
 //	[repsRGB release];
 
 	// we need to keep swizzled alive for NSBitmapImageRep
@@ -83,6 +83,13 @@ NSImage *imageImage(uiImage *i)
 
 void uiDrawImage(uiDrawContext *c, double x, double y, double width, double height, uiImage *image)
 {
+//	NSBitmapImageRep *imageRep = [[image->i representations] objectAtIndex: 0];
+//	NSData *data = [imageRep representationUsingType: NSPNGFileType properties: nil];
+//	[data writeToFile: @"/tmp/image.png" atomically: NO];
+
+	// TODO: use drawInRect
 	CGImageRef cgimg = [image->i CGImageForProposedRect:NULL context:nil hints:nil];
+	CGContextTranslateCTM(c->c, 0, image->size.height);
+	CGContextScaleCTM(c->c, 1.0, -1.0);
     CGContextDrawImage(c->c, CGRectMake(x, y, width, height), cgimg);
 }
