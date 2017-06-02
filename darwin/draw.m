@@ -103,11 +103,6 @@ void uiDrawPathEnd(uiDrawPath *p)
 	p->ended = TRUE;
 }
 
-struct uiDrawContext {
-	CGContextRef c;
-	CGFloat height;				// needed for text; see below
-};
-
 uiDrawContext *newContext(CGContextRef ctxt, CGFloat height)
 {
 	uiDrawContext *c;

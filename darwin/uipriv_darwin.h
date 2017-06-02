@@ -17,8 +17,6 @@
 #define NSAppKitVersionNumber10_9 1265
 #endif
 
-/*TODO remove this*/typedef struct uiImage uiImage;
-
 // menu.m
 @interface menuManager : NSObject {
 	struct mapTable *items;
@@ -144,3 +142,10 @@ extern NSImage *imageImage(uiImage *);
 // winmoveresize.m
 extern void doManualMove(NSWindow *w, NSEvent *initialEvent);
 extern void doManualResize(NSWindow *w, NSEvent *initialEvent, uiWindowResizeEdge edge);
+
+// draw.m, image.m
+struct uiDrawContext {
+    CGContextRef c;
+    CGFloat height;                // needed for text; see below
+};
+

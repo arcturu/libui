@@ -684,6 +684,15 @@ _UI_EXTERN int uiGridPadded(uiGrid *g);
 _UI_EXTERN void uiGridSetPadded(uiGrid *g, int padded);
 _UI_EXTERN uiGrid *uiNewGrid(void);
 
+typedef struct uiImage uiImage;
+#define uiForm(this) ((uiForm *) (this))
+_UI_EXTERN uiImage *uiNewImage(double width, double height);
+_UI_EXTERN void uiFreeImage(uiImage *i);
+_UI_EXTERN void uiImageAppend(uiImage *i, void *pixels, int pixelWidth, int pixelHeight, int pixelStride);
+_UI_EXTERN void uiDrawImage(uiDrawContext *c, double x, double y, double width, double height, uiImage *image);
+
+
+
 #ifdef __cplusplus
 }
 #endif

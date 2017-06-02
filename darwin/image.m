@@ -69,8 +69,8 @@ void uiImageAppend(uiImage *i, void *pixels, int pixelWidth, int pixelHeight, in
 	[repCalibrated release];
 
 	[i->i addRepresentation:repsRGB];
-	[repsRGB setSize:i->size];
-	[repsRGB release];
+//	[repsRGB setSize:i->size];
+//	[repsRGB release];
 
 	// we need to keep swizzled alive for NSBitmapImageRep
 	[i->swizzled addObject:[NSValue valueWithPointer:swizzled]];
@@ -79,4 +79,10 @@ void uiImageAppend(uiImage *i, void *pixels, int pixelWidth, int pixelHeight, in
 NSImage *imageImage(uiImage *i)
 {
 	return i->i;
+}
+
+void uiDrawImage(uiDrawContext *c, double x, double y, double width, double height, uiImage *image)
+{
+	CGImageRef cgimg = [image->i CGImageForProposedRect:NULL context:nil hints:nil];
+    CGContextDrawImage(c->c, CGRectMake(x, y, width, height), cgimg);
 }
